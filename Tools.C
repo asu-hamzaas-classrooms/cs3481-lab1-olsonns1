@@ -207,11 +207,11 @@ uint64_t Tools::copyBits(uint64_t source, uint64_t dest,
                          int32_t srclow, int32_t dstlow, int32_t length)
 {
   if(
-    length < 0 ||
-    srclow < 0 || (srclow + length) >= LONGSIZE*8 ||
-    dstlow < 0 || (dstlow + length) >= LONGSIZE*8
+    length < 1 ||
+    srclow < 0 || (srclow + length - 1) >= LONGSIZE*8 ||
+    dstlow < 0 || (dstlow + length - 1) >= LONGSIZE*8
   ) {
-    return source;
+    return dest;
   }
 
   dest ^= getBits(dest, dstlow, dstlow + length - 1) << dstlow;
