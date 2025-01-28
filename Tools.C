@@ -169,7 +169,13 @@ uint64_t Tools::setBits(uint64_t source, int32_t low, int32_t high)
  */
 uint64_t Tools::clearBits(uint64_t source, int32_t low, int32_t high)
 {
-  return 0;
+  if(low < 0 || high >= LONGSIZE*8 || low > high) {
+    return source;
+  }
+
+  // `unshiftedOnes` is the opposite of the (unshifted) AND mask!
+  uint64_t unshiftedOnes = ((uint64_t) -1ll) >> (LONGSIZE*8 - (high - low + 1));
+  return source & ~(unshiftedOnes << low);
 }
 
 
